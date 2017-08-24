@@ -1,0 +1,1460 @@
+{
+	"variables": [],
+	"info": {
+		"name": "myStundenplan",
+		"_postman_id": "e6b33ec2-e268-063e-87be-7414e25655b4",
+		"description": "* All requests parameters are copied from the applications real requests, the unecessary ones are disiabled.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Session Management",
+			"description": "",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"let session = $($.parseHTML(responseBody)).find('#session')[0].getAttribute('value');",
+									"postman.setEnvironmentVariable(\"param.session\", session);"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "https://www3.primuss.de/stpl/login.php",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user",
+									"value": "{{param.user}}",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "pwd",
+									"value": "{{param.password}}",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "mode",
+									"value": "login",
+									"description": "Const",
+									"type": "text"
+								},
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "lang",
+									"value": "{{param.lang}}",
+									"description": "Void",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "submitLogin",
+									"value": "Anmelden",
+									"description": "Void",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Login at myStundenplan first before you use other requests!\n\nThis request requires your credentials being present in the environment. After a successfull login your session id is extracted from the response and set as a new environment variable which will be used by all other requests. This is done via tests.\n\nA Login requests *login.php*, which returns a redirect to an index query for the latest semester. The redirect contains all necessary session information in it's query params, which will be added to all forms of the DOM by the server."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": "Required"
+								},
+								{
+									"key": "Lang",
+									"value": "{{param.lang}}",
+									"equals": true,
+									"description": "Void",
+									"disabled": true
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"equals": true,
+									"description": "Void",
+									"disabled": true
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"equals": true,
+									"description": "Void",
+									"disabled": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "Language",
+									"value": "",
+									"description": "Void",
+									"type": "text"
+								},
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"description": "Void",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "Void",
+									"type": "text"
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "Void",
+									"type": "text"
+								},
+								{
+									"key": "mode",
+									"value": "logout",
+									"description": "Const",
+									"type": "text"
+								}
+							]
+						},
+						"description": "This request redirects a user to the login page.\n\nIt looks like none of the sent params are evaluated by the service. This implies no session invalidation by the server!!!\nA session id exists until it times out or is overriden by a new login. Pretty awesome job :)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Query Calendar Data",
+			"description": "",
+			"item": [
+				{
+					"name": "Query personal calendar (JSON)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33&method=list",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": "Required"
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": "Void",
+									"disabled": true
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": "Query"
+								},
+								{
+									"key": "method",
+									"value": "list",
+									"equals": true,
+									"description": "Const"
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "showdate",
+									"value": "10/2/2017",
+									"description": "Void",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "viewtype",
+									"value": "week",
+									"description": "Void",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "timezone",
+									"value": "2",
+									"description": "Void",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "mode",
+									"value": "calendar",
+									"description": "Const",
+									"type": "text"
+								},
+								{
+									"key": "stgru",
+									"value": "467",
+									"description": "Query",
+									"type": "text"
+								}
+							]
+						},
+						"description": "Retrieve all subscribed events for your user account in the given semester."
+					},
+					"response": []
+				},
+				{
+					"name": "Query calendar by 'raum' (JSON)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33&method=list",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": "Required"
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": "No effect",
+									"disabled": true
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": "Query"
+								},
+								{
+									"key": "method",
+									"value": "list",
+									"equals": true,
+									"description": "Const"
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "showdate",
+									"value": "10/2/2017",
+									"description": "Void",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "viewtype",
+									"value": "week",
+									"description": "Void",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "timezone",
+									"value": "2",
+									"description": "Void",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "mode",
+									"value": "calendar",
+									"description": "Const",
+									"type": "text"
+								},
+								{
+									"key": "raum",
+									"value": "7",
+									"description": "Query",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query calendar by 'stgru' (JSON)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33&method=list",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": "Required"
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": "Void",
+									"disabled": true
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": "Query"
+								},
+								{
+									"key": "method",
+									"value": "list",
+									"equals": true,
+									"description": "Const"
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "showdate",
+									"value": "10/2/2017",
+									"description": "Void",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "viewtype",
+									"value": "week",
+									"description": "Void",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "timezone",
+									"value": "2",
+									"description": "Void",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "mode",
+									"value": "calendar",
+									"description": "Const",
+									"type": "text"
+								},
+								{
+									"key": "stgru",
+									"value": "467",
+									"description": "Query",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query calendar by 'faecherauswahlstgru' (JSON)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33&method=list",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": "Required"
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": "",
+									"disabled": true
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "method",
+									"value": "list",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "showdate",
+									"value": "10/2/2017",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "viewtype",
+									"value": "week",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timezone",
+									"value": "2",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "mode",
+									"value": "calendar",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "raum",
+									"value": "7",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query calendar by 'raumwoche' (JSON)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33&method=list",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "method",
+									"value": "list",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "showdate",
+									"value": "10/2/2017",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "viewtype",
+									"value": "week",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timezone",
+									"value": "2",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "mode",
+									"value": "calendar",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "stgru",
+									"value": "467",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query personal calendar (HTML)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33&stgru=467",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "stgru",
+									"value": "467",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "mode",
+									"value": "cbGrid",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query calendar by 'raum' (HTML)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33&raum=7",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "raum",
+									"value": "7",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "mode",
+									"value": "cbGrid",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query calendar by 'stgru' (HTML)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33&stgru=467",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "stgru",
+									"value": "467",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "mode",
+									"value": "cbGrid",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Query Metadata",
+			"description": "",
+			"item": [
+				{
+					"name": "Query semester list (JSON)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "mode",
+									"value": "cbsem",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query index by 'sem' (HTML)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Lang={{param.lang}}&User={{param.user}}&Session={{param.session}}",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "Lang",
+									"value": "{{param.lang}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "Language",
+									"value": "",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "sem",
+									"value": "30",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query organisation hierarchy (JSON)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "mode",
+									"value": "faecherauswahlstg",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query 'stgru' by 'stg'  (JSON)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "mode",
+									"value": "cbstg",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "stg",
+									"value": "81",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Other",
+			"description": "",
+			"item": [
+				{
+					"name": "Query 'raumbelegungstagesplan' (HTML)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33&method=list",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "method",
+									"value": "list",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "showdate",
+									"value": "10/2/2017",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "viewtype",
+									"value": "week",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timezone",
+									"value": "2",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "mode",
+									"value": "calendar",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "stgru",
+									"value": "467",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Save 'faecherauswahlstgru'",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "mode",
+									"value": "faecherauswahlspeichern",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "lv",
+									"value": "",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "stg",
+									"value": "81,88",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "stgru",
+									"value": "467,503,604",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
