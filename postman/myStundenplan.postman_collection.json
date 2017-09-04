@@ -30,7 +30,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Type",
+								"key": "content-type",
 								"value": "application/x-www-form-urlencoded",
 								"description": ""
 							}
@@ -276,10 +276,11 @@
 									"type": "text"
 								},
 								{
-									"key": "stgru",
-									"value": "467",
-									"description": "Query",
-									"type": "text"
+									"key": "pers",
+									"value": "",
+									"description": "Const",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
@@ -615,7 +616,7 @@
 					"name": "Query cbGrid for personal calendar (HTML)",
 					"request": {
 						"url": {
-							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33&pers=undefined",
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33",
 							"protocol": "https",
 							"host": [
 								"www3",
@@ -650,7 +651,8 @@
 									"key": "pers",
 									"value": "undefined",
 									"equals": true,
-									"description": "Const"
+									"description": "Void",
+									"disabled": true
 								}
 							],
 							"variable": []
