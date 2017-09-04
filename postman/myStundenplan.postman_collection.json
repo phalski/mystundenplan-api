@@ -30,7 +30,7 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Type",
+								"key": "content-type",
 								"value": "application/x-www-form-urlencoded",
 								"description": ""
 							}
@@ -276,10 +276,11 @@
 									"type": "text"
 								},
 								{
-									"key": "stgru",
-									"value": "467",
-									"description": "Query",
-									"type": "text"
+									"key": "pers",
+									"value": "",
+									"description": "Const",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
@@ -313,7 +314,7 @@
 									"key": "Language",
 									"value": "",
 									"equals": true,
-									"description": "No effect",
+									"description": "Void",
 									"disabled": true
 								},
 								{
@@ -389,7 +390,7 @@
 								}
 							]
 						},
-						"description": ""
+						"description": "Retrieve all events for a room in the given semester."
 					},
 					"response": []
 				},
@@ -495,12 +496,12 @@
 								}
 							]
 						},
-						"description": ""
+						"description": "Retrieve all events for a study group in the given semester."
 					},
 					"response": []
 				},
 				{
-					"name": "Query calendar by 'faecherauswahlstgru' (JSON)",
+					"name": "Query calendar by 'raumwoche' (JSON)",
 					"request": {
 						"url": {
 							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33&method=list",
@@ -525,20 +526,20 @@
 									"key": "Language",
 									"value": "",
 									"equals": true,
-									"description": "",
+									"description": "Void",
 									"disabled": true
 								},
 								{
 									"key": "sem",
 									"value": "33",
 									"equals": true,
-									"description": ""
+									"description": "Query"
 								},
 								{
 									"key": "method",
 									"value": "list",
 									"equals": true,
-									"description": ""
+									"description": "Const"
 								}
 							],
 							"variable": []
@@ -557,56 +558,65 @@
 								{
 									"key": "showdate",
 									"value": "10/2/2017",
-									"description": "",
-									"type": "text"
+									"description": "Void",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "viewtype",
 									"value": "week",
-									"description": "",
-									"type": "text"
+									"description": "Void",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "timezone",
 									"value": "2",
-									"description": "",
-									"type": "text"
+									"description": "Void",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "Session",
 									"value": "{{param.session}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								},
 								{
 									"key": "User",
 									"value": "{{param.user}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								},
 								{
 									"key": "mode",
 									"value": "calendar",
-									"description": "",
+									"description": "Const",
 									"type": "text"
 								},
 								{
-									"key": "raum",
+									"key": "raumwoche",
 									"value": "7",
-									"description": "",
+									"description": "Query",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"description": "Retrieve all events for selected week in the given semester."
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Query Cbgrid Data",
+			"description": "A cbGrid contains the HTML document corresponding to some calendar data. Most of it is useless, but sometimes it contains additional data.",
+			"item": [
 				{
-					"name": "Query calendar by 'raumwoche' (JSON)",
+					"name": "Query cbGrid for personal calendar (HTML)",
 					"request": {
 						"url": {
-							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33&method=list",
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33",
 							"protocol": "https",
 							"host": [
 								"www3",
@@ -622,127 +632,27 @@
 									"key": "FH",
 									"value": "{{param.fh}}",
 									"equals": true,
-									"description": ""
+									"description": "Required"
 								},
 								{
 									"key": "Language",
 									"value": "",
 									"equals": true,
-									"description": ""
+									"description": "Void",
+									"disabled": true
 								},
 								{
 									"key": "sem",
 									"value": "33",
 									"equals": true,
-									"description": ""
+									"description": "Query"
 								},
 								{
-									"key": "method",
-									"value": "list",
+									"key": "pers",
+									"value": "undefined",
 									"equals": true,
-									"description": ""
-								}
-							],
-							"variable": []
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/x-www-form-urlencoded",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "showdate",
-									"value": "10/2/2017",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "viewtype",
-									"value": "week",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "timezone",
-									"value": "2",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "Session",
-									"value": "{{param.session}}",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "User",
-									"value": "{{param.user}}",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "mode",
-									"value": "calendar",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "stgru",
-									"value": "467",
-									"description": "",
-									"type": "text"
-								}
-							]
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Query personal calendar (HTML)",
-					"request": {
-						"url": {
-							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33&stgru=467",
-							"protocol": "https",
-							"host": [
-								"www3",
-								"primuss",
-								"de"
-							],
-							"path": [
-								"stpl",
-								"index.php"
-							],
-							"query": [
-								{
-									"key": "FH",
-									"value": "{{param.fh}}",
-									"equals": true,
-									"description": ""
-								},
-								{
-									"key": "Language",
-									"value": "",
-									"equals": true,
-									"description": ""
-								},
-								{
-									"key": "sem",
-									"value": "33",
-									"equals": true,
-									"description": ""
-								},
-								{
-									"key": "stgru",
-									"value": "467",
-									"equals": true,
-									"description": ""
+									"description": "Void",
+									"disabled": true
 								}
 							],
 							"variable": []
@@ -761,32 +671,32 @@
 								{
 									"key": "mode",
 									"value": "cbGrid",
-									"description": "",
+									"description": "Const",
 									"type": "text"
 								},
 								{
 									"key": "Session",
 									"value": "{{param.session}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								},
 								{
 									"key": "User",
 									"value": "{{param.user}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"description": "HTML data for personal calender in current semester (no data)."
 					},
 					"response": []
 				},
 				{
-					"name": "Query calendar by 'raum' (HTML)",
+					"name": "Query cbGrid by 'raum' (HTML)",
 					"request": {
 						"url": {
-							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33&raum=7",
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33&raum=7",
 							"protocol": "https",
 							"host": [
 								"www3",
@@ -802,25 +712,26 @@
 									"key": "FH",
 									"value": "{{param.fh}}",
 									"equals": true,
-									"description": ""
+									"description": "Required"
 								},
 								{
 									"key": "Language",
 									"value": "",
 									"equals": true,
-									"description": ""
+									"description": "Void",
+									"disabled": true
 								},
 								{
 									"key": "sem",
 									"value": "33",
 									"equals": true,
-									"description": ""
+									"description": "Query"
 								},
 								{
 									"key": "raum",
 									"value": "7",
 									"equals": true,
-									"description": ""
+									"description": "Query"
 								}
 							],
 							"variable": []
@@ -839,32 +750,32 @@
 								{
 									"key": "mode",
 									"value": "cbGrid",
-									"description": "",
+									"description": "Const",
 									"type": "text"
 								},
 								{
 									"key": "Session",
 									"value": "{{param.session}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								},
 								{
 									"key": "User",
 									"value": "{{param.user}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"description": "Retrieve HTML for raum calendar (contains additional data)."
 					},
 					"response": []
 				},
 				{
-					"name": "Query calendar by 'stgru' (HTML)",
+					"name": "Query cbGrid by 'stgru' (HTML)",
 					"request": {
 						"url": {
-							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33&stgru=467",
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33&stgru=467",
 							"protocol": "https",
 							"host": [
 								"www3",
@@ -880,25 +791,26 @@
 									"key": "FH",
 									"value": "{{param.fh}}",
 									"equals": true,
-									"description": ""
+									"description": "Required"
 								},
 								{
 									"key": "Language",
 									"value": "",
 									"equals": true,
-									"description": ""
+									"description": "Void",
+									"disabled": true
 								},
 								{
 									"key": "sem",
 									"value": "33",
 									"equals": true,
-									"description": ""
+									"description": "Query"
 								},
 								{
 									"key": "stgru",
 									"value": "467",
 									"equals": true,
-									"description": ""
+									"description": "Query"
 								}
 							],
 							"variable": []
@@ -917,24 +829,24 @@
 								{
 									"key": "mode",
 									"value": "cbGrid",
-									"description": "",
+									"description": "Const",
 									"type": "text"
 								},
 								{
 									"key": "Session",
 									"value": "{{param.session}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								},
 								{
 									"key": "User",
 									"value": "{{param.user}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"description": "Retrieve HTML for stgru calendar (no data)."
 					},
 					"response": []
 				}
@@ -948,7 +860,7 @@
 					"name": "Query semester list (JSON)",
 					"request": {
 						"url": {
-							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33",
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}",
 							"protocol": "https",
 							"host": [
 								"www3",
@@ -964,19 +876,21 @@
 									"key": "FH",
 									"value": "{{param.fh}}",
 									"equals": true,
-									"description": ""
+									"description": "Required"
 								},
 								{
 									"key": "Language",
 									"value": "",
 									"equals": true,
-									"description": ""
+									"description": "Void",
+									"disabled": true
 								},
 								{
 									"key": "sem",
 									"value": "33",
 									"equals": true,
-									"description": ""
+									"description": "Void",
+									"disabled": true
 								}
 							],
 							"variable": []
@@ -995,19 +909,19 @@
 								{
 									"key": "mode",
 									"value": "cbsem",
-									"description": "",
+									"description": "Const",
 									"type": "text"
 								},
 								{
 									"key": "Session",
 									"value": "{{param.session}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								},
 								{
 									"key": "User",
 									"value": "{{param.user}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								}
 							]
@@ -1020,7 +934,7 @@
 					"name": "Query index by 'sem' (HTML)",
 					"request": {
 						"url": {
-							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Lang={{param.lang}}&User={{param.user}}&Session={{param.session}}",
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}",
 							"protocol": "https",
 							"host": [
 								"www3",
@@ -1036,25 +950,28 @@
 									"key": "FH",
 									"value": "{{param.fh}}",
 									"equals": true,
-									"description": ""
+									"description": "Required"
 								},
 								{
 									"key": "Lang",
 									"value": "{{param.lang}}",
 									"equals": true,
-									"description": ""
+									"description": "Void",
+									"disabled": true
 								},
 								{
 									"key": "User",
 									"value": "{{param.user}}",
 									"equals": true,
-									"description": ""
+									"description": "Void",
+									"disabled": true
 								},
 								{
 									"key": "Session",
 									"value": "{{param.session}}",
 									"equals": true,
-									"description": ""
+									"description": "Void",
+									"disabled": true
 								}
 							],
 							"variable": []
@@ -1073,36 +990,38 @@
 								{
 									"key": "Language",
 									"value": "",
-									"description": "",
-									"type": "text"
+									"description": "Void",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "FH",
 									"value": "{{param.fh}}",
-									"description": "",
-									"type": "text"
+									"description": "Void",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "User",
 									"value": "{{param.user}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								},
 								{
 									"key": "Session",
 									"value": "{{param.session}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								},
 								{
 									"key": "sem",
 									"value": "30",
-									"description": "",
+									"description": "Query",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"description": "Retrieve index page for the requested semester. This page contains option ranges for rooms and study groups, along with hours spec and link metadata."
 					},
 					"response": []
 				},
@@ -1110,7 +1029,7 @@
 					"name": "Query organisation hierarchy (JSON)",
 					"request": {
 						"url": {
-							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33",
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33",
 							"protocol": "https",
 							"host": [
 								"www3",
@@ -1126,19 +1045,20 @@
 									"key": "FH",
 									"value": "{{param.fh}}",
 									"equals": true,
-									"description": ""
+									"description": "Required"
 								},
 								{
 									"key": "Language",
 									"value": "",
 									"equals": true,
-									"description": ""
+									"description": "Void",
+									"disabled": true
 								},
 								{
 									"key": "sem",
 									"value": "33",
 									"equals": true,
-									"description": ""
+									"description": "Query"
 								}
 							],
 							"variable": []
@@ -1157,24 +1077,24 @@
 								{
 									"key": "mode",
 									"value": "faecherauswahlstg",
-									"description": "",
+									"description": "Const",
 									"type": "text"
 								},
 								{
 									"key": "Session",
 									"value": "{{param.session}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								},
 								{
 									"key": "User",
 									"value": "{{param.user}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"description": "Retrieve a hierachical structure of organisation structure (faculty/course/study group). Contains option ranges for study groups. The users selected study groups are marked."
 					},
 					"response": []
 				},
@@ -1182,7 +1102,7 @@
 					"name": "Query 'stgru' by 'stg'  (JSON)",
 					"request": {
 						"url": {
-							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33",
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33",
 							"protocol": "https",
 							"host": [
 								"www3",
@@ -1198,19 +1118,20 @@
 									"key": "FH",
 									"value": "{{param.fh}}",
 									"equals": true,
-									"description": ""
+									"description": "Required"
 								},
 								{
 									"key": "Language",
 									"value": "",
 									"equals": true,
-									"description": ""
+									"description": "Void",
+									"disabled": true
 								},
 								{
 									"key": "sem",
 									"value": "33",
 									"equals": true,
-									"description": ""
+									"description": "Query"
 								}
 							],
 							"variable": []
@@ -1229,30 +1150,30 @@
 								{
 									"key": "mode",
 									"value": "cbstg",
-									"description": "",
+									"description": "Const",
 									"type": "text"
 								},
 								{
 									"key": "stg",
 									"value": "81",
-									"description": "",
+									"description": "Query",
 									"type": "text"
 								},
 								{
 									"key": "Session",
 									"value": "{{param.session}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								},
 								{
 									"key": "User",
 									"value": "{{param.user}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"description": "Retrieve data for a course and it's child study groups in the given semester."
 					},
 					"response": []
 				}
@@ -1266,7 +1187,7 @@
 					"name": "Query 'raumbelegungstagesplan' (HTML)",
 					"request": {
 						"url": {
-							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33&method=list",
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33",
 							"protocol": "https",
 							"host": [
 								"www3",
@@ -1282,25 +1203,20 @@
 									"key": "FH",
 									"value": "{{param.fh}}",
 									"equals": true,
-									"description": ""
+									"description": "Required"
 								},
 								{
 									"key": "Language",
 									"value": "",
 									"equals": true,
-									"description": ""
+									"description": "Void",
+									"disabled": true
 								},
 								{
 									"key": "sem",
 									"value": "33",
 									"equals": true,
-									"description": ""
-								},
-								{
-									"key": "method",
-									"value": "list",
-									"equals": true,
-									"description": ""
+									"description": "Query"
 								}
 							],
 							"variable": []
@@ -1317,50 +1233,40 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "showdate",
-									"value": "10/2/2017",
-									"description": "",
-									"type": "text"
+									"key": "datum",
+									"value": "2017-8-29",
+									"description": "Void",
+									"type": "text",
+									"disabled": true
 								},
 								{
-									"key": "viewtype",
-									"value": "week",
-									"description": "",
-									"type": "text"
+									"key": "bis",
+									"value": "2017-8-29",
+									"description": "Void",
+									"type": "text",
+									"disabled": true
 								},
 								{
-									"key": "timezone",
-									"value": "2",
-									"description": "",
+									"key": "mode",
+									"value": "raumpland",
+									"description": "Const",
 									"type": "text"
 								},
 								{
 									"key": "Session",
 									"value": "{{param.session}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								},
 								{
 									"key": "User",
 									"value": "{{param.user}}",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "mode",
-									"value": "calendar",
-									"description": "",
-									"type": "text"
-								},
-								{
-									"key": "stgru",
-									"value": "467",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"description": "Retrieve overview of availiable rooms."
 					},
 					"response": []
 				},
@@ -1368,7 +1274,7 @@
 					"name": "Save 'faecherauswahlstgru'",
 					"request": {
 						"url": {
-							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&Language=&sem=33",
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33",
 							"protocol": "https",
 							"host": [
 								"www3",
@@ -1384,19 +1290,20 @@
 									"key": "FH",
 									"value": "{{param.fh}}",
 									"equals": true,
-									"description": ""
+									"description": "Required"
 								},
 								{
 									"key": "Language",
 									"value": "",
 									"equals": true,
-									"description": ""
+									"description": "Void",
+									"disabled": true
 								},
 								{
 									"key": "sem",
 									"value": "33",
 									"equals": true,
-									"description": ""
+									"description": "Query"
 								}
 							],
 							"variable": []
@@ -1415,42 +1322,127 @@
 								{
 									"key": "mode",
 									"value": "faecherauswahlspeichern",
-									"description": "",
+									"description": "Const",
 									"type": "text"
 								},
 								{
 									"key": "Session",
 									"value": "{{param.session}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								},
 								{
 									"key": "User",
 									"value": "{{param.user}}",
-									"description": "",
+									"description": "Required",
 									"type": "text"
 								},
 								{
 									"key": "lv",
 									"value": "",
-									"description": "",
+									"description": "Values",
 									"type": "text"
 								},
 								{
 									"key": "stg",
 									"value": "81,88",
-									"description": "",
+									"description": "Values",
 									"type": "text"
 								},
 								{
 									"key": "stgru",
 									"value": "467,503,604",
-									"description": "",
+									"description": "Values",
 									"type": "text"
 								}
 							]
 						},
-						"description": ""
+						"description": "Save faecherauswahlstrgru for user."
+					},
+					"response": []
+				},
+				{
+					"name": "Query faecherauswahllv by 'faecherauswahlstgru' (JSON)",
+					"request": {
+						"url": {
+							"raw": "https://www3.primuss.de/stpl/index.php?FH={{param.fh}}&sem=33&method=list",
+							"protocol": "https",
+							"host": [
+								"www3",
+								"primuss",
+								"de"
+							],
+							"path": [
+								"stpl",
+								"index.php"
+							],
+							"query": [
+								{
+									"key": "FH",
+									"value": "{{param.fh}}",
+									"equals": true,
+									"description": "Required"
+								},
+								{
+									"key": "Language",
+									"value": "",
+									"equals": true,
+									"description": "Void",
+									"disabled": true
+								},
+								{
+									"key": "sem",
+									"value": "33",
+									"equals": true,
+									"description": "Query"
+								},
+								{
+									"key": "method",
+									"value": "list",
+									"equals": true,
+									"description": "Const"
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "mode",
+									"value": "faecherauswahllv",
+									"description": "Const",
+									"type": "text"
+								},
+								{
+									"key": "faecherauswahlstgru",
+									"value": "467",
+									"description": "Query",
+									"type": "text"
+								},
+								{
+									"key": "Session",
+									"value": "{{param.session}}",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "User",
+									"value": "{{param.user}}",
+									"description": "Required",
+									"type": "text"
+								}
+							]
+						},
+						"description": "Retrieve all events for your user accounts faecherauswahl in the given semester."
 					},
 					"response": []
 				}

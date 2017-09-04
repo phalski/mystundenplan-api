@@ -1,0 +1,5 @@
+workspace-variables.json
+*.iml
+knime/.idea
+knime/data
+knime/target
